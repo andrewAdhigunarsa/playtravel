@@ -1,13 +1,45 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useForm } from "react-hook-form";
+import axios from 'axios';
 
-function LoginForm(props) { const { register, errors, watch, handleSubmit } = useForm();
-    // const onSubmit = data => console.log(data);
+function LoginForm(props) { const { register, setError, errors, watch, handleSubmit } = useForm();
     const password = useRef({});
     password.current = watch("password", "");
     const onSubmit = async data => {
         alert(JSON.stringify(data));
+        console.log(data);
+        axios({
+            url: 'http://localhost:9000/graphql',
+            method: 'post',
+            data: {
+                query: `
+                  mutation {
+                      login(input: {email:"${data.email}", password: "${data.password}"}) {
+                        jwtToken{
+                          role
+                          userId
+                          name
+                        } 
+                      }
+                    }
+                  `
+            }
+        }).then((result) => {
+            console.log(result.data)
+        }).catch((err) => {
+            console.error(err);
+            // setError("email", {
+            //     type: "manual",
+            //     message: "Dont Forget Your Username Should Be Cool!"
+            // });
+        })
     };
+
+    useEffect(()=>{
+
+    },[])
+
+
 
     return (
         <form className={'login-form'} onSubmit={handleSubmit(onSubmit)}>
