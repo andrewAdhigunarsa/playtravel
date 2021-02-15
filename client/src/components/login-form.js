@@ -6,32 +6,45 @@ function LoginForm(props) { const { register, setError, errors, watch, handleSub
     const password = useRef({});
     password.current = watch("password", "");
     const onSubmit = async data => {
-        alert(JSON.stringify(data));
-        console.log(data);
         axios({
-            url: 'http://localhost:9000/graphql',
+            url: 'http://localhost:5000/graphql',
             method: 'post',
             data: {
                 query: `
                   mutation {
                       login(input: {email:"${data.email}", password: "${data.password}"}) {
-                        jwtToken{
-                          role
-                          userId
-                          name
-                        } 
+                        jwtToken
                       }
                     }
                   `
             }
         }).then((result) => {
-            console.log(result.data)
+            console.log(result.data.data.login.jwtToken)
+            if(result.data.data.login && result.data.data.login.jwtToken === null){
+                setError("email", {
+                    type: "manual",
+                    message: ""
+                });
+                setError("password", {
+                    type: "manual",
+                    message: "Credential is not right"
+                });
+            }else if (result.data.data.login && result.data.data.login.jwtToken !== null){
+                window.alert("logging in")
+                props.handleAuth(true);
+                sessionStorage.setItem('userToken', result.data.data.login.jwtToken);
+            }
+
         }).catch((err) => {
             console.error(err);
-            // setError("email", {
-            //     type: "manual",
-            //     message: "Dont Forget Your Username Should Be Cool!"
-            // });
+            setError("email", {
+                type: "manual",
+                message: ""
+            });
+            setError("password", {
+                type: "manual",
+                message: "Credential is not right"
+            });
         })
     };
 

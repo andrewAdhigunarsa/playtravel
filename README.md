@@ -187,6 +187,7 @@ npx postgraphile -n 0.0.0.0 \
 --jwt-secret superSecretRandom \
 --default-role anonymous \
 --show-error-stack
+--cors
 ```
 
 note: (flag explanation)
@@ -244,4 +245,5 @@ query{
 
 username: test
 email: test@example.com
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoicmVnaXN0ZXJlZF91c2VyIiwidXNlcl9pZCI6NiwibmFtZSI6InRlc3QiLCJpYXQiOjE2MTM0MDA4MjgsImV4cCI6MTYxMzQ4NzIyOCwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.Fl1AHBgpi1JFDsDxoLZL0SlaYxqv3awjfwTfJGHgwHg"
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoicmVnaXN0ZXJlZF91c2VyIiwidXNlcl9pZCI6NiwibmFtZSI6InRlc3QiLCJpYXQiOjE2MTM0MTY5MTYsImV4cCI6MTYxMzUwMzMxNiwiYXVkIjoicG9zdGdyYXBoaWxlIiwiaXNzIjoicG9zdGdyYXBoaWxlIn0.bc78c3XlCTBOTdbQjUZBSHkGJ5HJhHG9yLMpnIgADdA
